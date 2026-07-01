@@ -16,8 +16,9 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    background: linear-gradient(135deg, #1f1c2c, #928dab);
+    background: 
+        radial-gradient(circle at center, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.85) 100%),
+        url('logo.png') center/cover no-repeat fixed;
     overflow: hidden;
 }
 

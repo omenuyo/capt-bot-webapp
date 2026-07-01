@@ -4,15 +4,51 @@ let tg = window.Telegram.WebApp;
 tg.ready();
 
 // Устанавливаем цвет кнопки MainButton
-tg.MainButton.color = '#2481cc';
-tg.MainButton.textColor = '#ffffff';
-
+const eventType = document.getElementById("event-type");
 const familyInput = document.getElementById("family");
 const timeInput = document.getElementById("time");
+const familyGroup = familyInput.parentElement;
+const timeGroup = timeInput.parentElement;
 
-// Функция проверки полей
+// Обновление видимости полей в зависимости от типа
+function updateFields() {
+    let type = eventType.value;
+    
+    // Семья нужна только для капта
+    if (type === 'capt') {
+        familyGroup.classList.remove('hidden');
+    } else {
+        familyGroup.classList.add('hidden');
+    }
+    
+    // Время не нужно для срочного собрания (оно "Сейчас")
+    if (type === 'meeting') {
+        timeGroup.classList.add('hidden');
+    } else {
+        timeGroup.classList.remove('hidden');
+    }
+    
+    checkInputs();
+}
+
+eventType.addEventListener('change', updateFields);
+
 function checkInputs() {
-    if (familyInput.value.trim() !== "" && timeInput.value.trim() !== "") {
+    let type = eventType.value;
+    let isValid = false;
+    
+    let fVal = familyInput.value.trim();
+    let tVal = timeInput.value.trim();
+    
+    if (type === 'capt') {
+        isValid = (fVal !== "" && tVal !== "");
+    } else if (type === 'kidnap' || type === 'contract') {
+        isValid = (tVal !== "");
+    } else if (type === 'meeting') {
+        isValid = true; // Для собрания ничего вводить не нужно
+    }
+
+    if (isValid) {
         tg.MainButton.text = "РАЗОСЛАТЬ";
         tg.MainButton.show();
     } else {
@@ -25,15 +61,21 @@ timeInput.addEventListener('input', checkInputs);
 
 
 
-// Обработка нажатия на MainButton самого Telegram
 Telegram.WebApp.onEvent('mainButtonClicked', function() {
+    let type = eventType.value;
     let family = familyInput.value.trim();
     let time = timeInput.value.trim();
     
+    if (type === 'meeting') time = "Сейчас";
+    
     let data = {
+        type: type,
         family: family,
         time: time
     };
     
     tg.sendData(JSON.stringify(data));
 });
+
+// Инициализация при загрузке
+updateFields();

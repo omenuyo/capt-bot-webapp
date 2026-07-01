@@ -66,6 +66,10 @@ body {
     gap: 8px;
 }
 
+.form-group.hidden {
+    display: none;
+}
+
 label {
     font-size: 13px;
     font-weight: 600;
@@ -74,7 +78,7 @@ label {
     letter-spacing: 1px;
 }
 
-input {
+input, select {
     background: rgba(0, 0, 0, 0.2);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 12px;
@@ -83,6 +87,11 @@ input {
     font-size: 16px;
     outline: none;
     transition: all 0.3s ease;
+}
+
+select option {
+    color: #000;
+    background: #fff;
 }
 
 input::placeholder {

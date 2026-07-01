@@ -10,16 +10,26 @@
 </head>
 <body>
     <div class="container">
-        <h1 class="title">Создание рассылки</h1>
-        <p class="subtitle">Укажите данные для уведомления о капте</p>
+        <h1 class="title">Новая рассылка</h1>
+        <p class="subtitle">Выберите тип события</p>
 
         <div class="form-group">
-            <label for="family">Название семьи (Противник)</label>
+            <label for="event-type">Тип события</label>
+            <select id="event-type">
+                <option value="capt">Битва за территории (Капт)</option>
+                <option value="kidnap">Похищение</option>
+                <option value="contract">Контракт</option>
+                <option value="meeting">Срочное собрание</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="family">Противник</label>
             <input type="text" id="family" placeholder="Например: Allegri" autocomplete="off">
         </div>
 
         <div class="form-group">
-            <label for="time">Время капта</label>
+            <label for="time">Время</label>
             <input type="text" id="time" placeholder="Например: 15:30" autocomplete="off">
         </div>
 
